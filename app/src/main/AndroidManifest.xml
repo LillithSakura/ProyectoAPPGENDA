@@ -9,22 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:label="@string/LoginActivityNAME">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BaseActivity"
-            android:label="@string/title_activity_menu" />
-        <activity android:name=".ListaNotasActivity" />
-        <activity android:name=".NoteActivity" />
-        <activity android:name=".MatchingActivity" />
-        <activity android:name=".WatchlistActivity" />
-        <activity android:name=".RatesActivity" />
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".ListaNotasActivity" android:label="@string/ListaNotasActivityNAME"/>
+        <activity android:name=".NoteActivity" android:label="@string/NoteActivityNAME"/>
+        <activity android:name=".HomeActivity" android:label="@string/HomeActivityNAME"></activity>
     </application>
 
 </manifest>

@@ -45,10 +45,11 @@ public class HomeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.notas:
-                        //Log.i("notas", "abre pantalla notas" + checkedId);
                         in = new Intent(getBaseContext(), ListaNotasActivity.class);
                         startActivity(in);
-                        //overridePendingTransition(0, 0);
+                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                        //MOVER HACIA LA IZQUIERDA
+
                         break;
                         /*
                     case R.id.rates:

@@ -38,10 +38,10 @@ public class ListaNotasActivity extends AppCompatActivity {
                 switch (checkedId)
                 {
                     case R.id.home:
-                        //Log.i("home", "pantalla home" +  checkedId);
                         in=new Intent(getBaseContext(),HomeActivity.class);
                         startActivity(in);
-                        //overridePendingTransition(0, 0);
+                        //MOVER HACIA LA DERECHA
+                        overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
                         break;
 
                     case R.id.notas:
