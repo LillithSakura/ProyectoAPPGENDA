@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ProyectoAPPGENDA</string>
+    <string name="correo">Ingrese su Correo</string>
+    <string name="contraseña">Ingrese su Contraseña</string>
+    <string name="ip_del_servidor">Ip del Servidor</string>
+    <string name="iniciar">Iniciar Sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="MensajeInicio">Bienvenido</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_dashboard">Notas</string>
+    <string name="title_notifications">Foro</string>
+</resources>

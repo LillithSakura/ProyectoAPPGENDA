@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mx.edu.itlp.proyectoappgenda.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="369dp"
+        android:layout_height="504dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recordatorios Pendientes"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="Recordatorios Pendientes" />
+
+        <ListView
+            android:id="@+id/ListaRecordatorios"
+            android:layout_width="match_parent"
+            android:layout_height="420dp" />
+
+        <LinearLayout
+            android:id="@+id/bottonNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:elevation="10dp"
+            android:foregroundGravity="bottom"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_home_black_24dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="Home"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/notas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_border_color_black_24dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="Notas"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/foro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_forum_black_24dp"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp"
+                    android:text="Foro"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+
+            </RadioGroup>
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
