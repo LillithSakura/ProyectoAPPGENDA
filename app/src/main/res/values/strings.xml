@@ -11,7 +11,7 @@
     <string name="title_dashboard">Notas</string>
     <string name="title_notifications">Foro</string>
     <string name="NoteActivityNAME">Nueva Nota</string>
-    <string name="LoginActivityNAME">Ingresar</string>
+    <string name="LoginActivityNAME">Ingresar a chat grupal</string>
     <string name="ListaNotasActivityNAME">Notas y Recordatorios</string>
-    <string name="HomeActivityNAME">Inicio</string>
+    <string name="HomeActivityNAME">APPGENDA+</string>
 </resources>

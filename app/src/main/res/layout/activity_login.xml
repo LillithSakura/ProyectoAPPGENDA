@@ -4,32 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.edu.itlp.proyectoappgenda.ListadoNotasActivity"
+    tools:context="mx.edu.itlp.proyectoappgenda.LoginActivity"
     tools:layout_editor_absoluteY="81dp">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="148dp"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/appgenda"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="522dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView2"
@@ -110,7 +98,80 @@
             android:id="@+id/progressBar3"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="111dp" />
+
+        <LinearLayout
+            android:id="@+id/bottonNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:elevation="10dp"
+            android:foregroundGravity="bottom"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_home_black_24dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="Home"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/notas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_border_color_black_24dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="Notas"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/foro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_forum_black_24dp"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp"
+                    android:text="Foro"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+
+            </RadioGroup>
+        </LinearLayout>
 
     </LinearLayout>
 

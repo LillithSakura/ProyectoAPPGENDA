@@ -51,15 +51,13 @@ public class HomeActivity extends AppCompatActivity {
                         //MOVER HACIA LA IZQUIERDA
 
                         break;
-                        /*
-                    case R.id.rates:
-                        Log.i("matching", "matching inside1 rate" + checkedId);
 
-                        in = new Intent(getBaseContext(),RatesActivity.class);
+                    case R.id.foro:
+                        in = new Intent(getBaseContext(),LoginActivity.class);
                         startActivity(in);
-                        overridePendingTransition(0, 0);
+                        overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
                         break;
-                        */
+
                     default:
                         break;
                 }

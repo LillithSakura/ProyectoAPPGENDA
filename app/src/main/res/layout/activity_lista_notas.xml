@@ -7,16 +7,22 @@
     tools:context="mx.edu.itlp.proyectoappgenda.ListaNotasActivity">
 
     <LinearLayout
-        android:layout_width="370dp"
-        android:layout_height="504dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ListView
             android:id="@+id/main_listview_notes"
             android:layout_width="match_parent"
-            android:layout_height="441dp" />
+            android:layout_height="458dp" />
 
         <LinearLayout
             android:id="@+id/bottonNavBar"

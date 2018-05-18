@@ -50,15 +50,13 @@ public class ListaNotasActivity extends AppCompatActivity {
                         //startActivity(in);
                         //overridePendingTransition(0, 0);
                         break;
-                        /*
-                    case R.id.rates:
-                        Log.i("matching", "matching inside1 rate" + checkedId);
 
-                        in = new Intent(getBaseContext(),RatesActivity.class);
+                    case R.id.foro:
+                        in = new Intent(getBaseContext(),LoginActivity.class);
                         startActivity(in);
-                        overridePendingTransition(0, 0);
+                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
                         break;
-                        */
+
                     default:
                         break;
                 }

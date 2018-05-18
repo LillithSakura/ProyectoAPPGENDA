@@ -6,31 +6,50 @@
     android:layout_height="match_parent"
     tools:context="mx.edu.itlp.proyectoappgenda.HomeActivity">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="148dp"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/appgenda1"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
-        android:layout_width="369dp"
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
         android:layout_height="504dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="136dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:text="Recordatorios Pendientes"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@android:color/background_light"
             tools:text="Recordatorios Pendientes" />
 
         <ListView
             android:id="@+id/ListaRecordatorios"
             android:layout_width="match_parent"
-            android:layout_height="420dp" />
+            android:layout_height="293dp" />
 
         <LinearLayout
             android:id="@+id/bottonNavBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="62dp"
             android:layout_alignParentBottom="true"
             android:background="#ffffff"
             android:elevation="10dp"
