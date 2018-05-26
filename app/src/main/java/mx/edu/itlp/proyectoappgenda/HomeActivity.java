@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         nListViewNotes.setAdapter(null);
 
-        ArrayList<Note> notes = Utilities.loadNote(this);
+        ArrayList<Note> notes = Utilities.loadNote(this, "Nota");
         if (notes == null || notes.size()==0){
             Toast.makeText(this,"No tienes notas creadas",Toast.LENGTH_SHORT).show();
             return;

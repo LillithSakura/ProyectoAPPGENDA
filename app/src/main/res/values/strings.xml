@@ -14,4 +14,6 @@
     <string name="LoginActivityNAME">Ingresar a chat grupal</string>
     <string name="ListaNotasActivityNAME">Notas y Recordatorios</string>
     <string name="HomeActivityNAME">APPGENDA+</string>
+    <string name="NotasPrivadasActivityNAME">Notas privadas</string>
+    <string name="PrivNoteActivityNAME">Nueva nota privada</string>
 </resources>

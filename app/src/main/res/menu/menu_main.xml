@@ -9,5 +9,13 @@
         android:orderInCategory="0"
         app:showAsAction="always"
         />
+    <item
+        android:enabled="true"
+        android:title="Privadas"
+        android:id="@+id/action_private_save"
+        android:icon="@android:drawable/ic_menu_view"
+        android:orderInCategory="0"
+        app:showAsAction="always"
+        />
 
 </menu>

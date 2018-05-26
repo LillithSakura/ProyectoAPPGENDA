@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="mx.edu.itlp.proyectoappgenda.ListaNotasActivity">
 
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
@@ -22,7 +23,8 @@
         <ListView
             android:id="@+id/main_listview_notes"
             android:layout_width="match_parent"
-            android:layout_height="458dp" />
+            android:layout_height="458dp"
+            android:longClickable="true"/>
 
         <LinearLayout
             android:id="@+id/bottonNavBar"
@@ -58,7 +60,7 @@
                     android:drawableTop="@drawable/ic_home_black_24dp"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="Inicio"
+                    android:text="Home"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp" />
 

@@ -17,9 +17,32 @@ import java.util.ArrayList;
 public class Utilities {
 
     public static final String FILE_EXTENSIONS = ".txt";
+    public static final String FILE_PRIVATE = ".priv";
 
     public static boolean saveNote(Context context, Note note){
         String fileName = String.valueOf(note.getnDateTime()) + FILE_EXTENSIONS;
+
+        //Escribir algo en memoria interna
+        FileOutputStream fos;
+        ObjectOutputStream oos;
+        try{
+            fos = context.openFileOutput(fileName,context.MODE_WORLD_READABLE);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(note);
+            oos.close(); //Siempre cerrarlos
+            fos.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+            return false; //Le dice si existen problemas, como si no existe espacio
+        }
+
+        return true;
+
+    }
+
+    public static boolean savePrivate(Context context, Note note){
+        String fileName = String.valueOf(note.getnDateTime()) + FILE_PRIVATE;
 
         //Escribir algo en memoria interna
         FileOutputStream fos;
@@ -40,13 +63,47 @@ public class Utilities {
 
     }
 
-    public static ArrayList<Note> loadNote (Context context){
+    public static ArrayList<Note> loadNote (Context context, String tipo){ // CARGA LAS NOTAS  COMUNES
+        ArrayList<Note> notes = new ArrayList<>();
+        File filesDir = context.getFilesDir();
+        ArrayList<String> noteFiles = new ArrayList<>();
+        System.out.println(context.getFilesDir());
+
+        for (String file : filesDir.list()){
+            if (file.endsWith(FILE_EXTENSIONS)){
+                noteFiles.add(file);
+            }
+        }
+
+        FileInputStream fis;
+        ObjectInputStream ois;
+
+        for (int i = 0; i < noteFiles.size(); i++){
+            try{
+                fis = context.openFileInput(noteFiles.get(i));
+                ois = new ObjectInputStream(fis);
+
+                notes.add((Note)ois.readObject());
+
+                fis.close();
+                ois.close();
+
+            }catch (IOException | ClassNotFoundException e){
+                e.printStackTrace();
+                return  null;
+            }
+        }
+
+        return notes;
+    }
+
+    public static ArrayList<Note> loadListPrivate (Context context){ //CARGA LAS NOTAS PRIVADAS
         ArrayList<Note> notes = new ArrayList<>();
         File filesDir = context.getFilesDir();
         ArrayList<String> noteFiles = new ArrayList<>();
 
         for (String file : filesDir.list()){
-            if (file.endsWith(FILE_EXTENSIONS)){
+            if (file.endsWith(FILE_PRIVATE)){
                 noteFiles.add(file);
             }
         }
