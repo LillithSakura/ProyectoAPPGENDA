@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,7 +22,11 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     RadioGroup radioGroup1;
     RadioButton deals;
+    private EditText nTitle;
+    private  EditText nContent;
+    private String nNoteFileName;
     private Note nLoadedNote;
+
     private ListView nListViewNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +133,20 @@ public class ListaNotasActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                                Utilities.deleteNote(getApplicationContext(),fileName);
-                                                Toast.makeText(getApplicationContext(),"La nota se eliminó", Toast.LENGTH_SHORT).show();
+                                                nNoteFileName = fileName;
+                                                if (nNoteFileName != null && !nNoteFileName.isEmpty()){
+                                                    nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+                                                    if (nLoadedNote != null){
+                                                        Utilities.deleteNote(getApplicationContext(),fileName);
+                                                        Toast.makeText(getApplicationContext(),"La nota "+ nLoadedNote.getnTitle() +"se eliminó", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }
+                                                else{
+                                                    Utilities.deleteNote(getApplicationContext(),fileName);
+                                                    Toast.makeText(getApplicationContext(),"La nota se eliminó", Toast.LENGTH_SHORT).show();
+                                                }
+
                                                 recreate();
                                             }
                                         }).setNegativeButton("No",null)
