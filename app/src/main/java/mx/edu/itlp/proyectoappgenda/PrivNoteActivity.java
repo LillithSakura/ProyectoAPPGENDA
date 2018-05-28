@@ -25,7 +25,7 @@ public class PrivNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_priv_note);
 
         nTitle = findViewById(R.id.note_et_title);
-        nContent = findViewById(R.id.note_et_content);
+        nContent = findViewById(R.id.note_et_content2);
 
         nNoteFileName = getIntent().getStringExtra("NOTE_FILE");
         if (nNoteFileName != null && !nNoteFileName.isEmpty()){
@@ -33,6 +33,7 @@ public class PrivNoteActivity extends AppCompatActivity {
             if (nLoadedNote != null){
                 nTitle.setText(nLoadedNote.getnTitle());
                 nContent.setText(nLoadedNote.getnContent());
+                setTitle("Editando Apunte Privado");
             }
 
         }
@@ -65,7 +66,7 @@ public class PrivNoteActivity extends AppCompatActivity {
         }else{
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle("Borrar Nota")
-                    .setMessage("Está a punto de eliminar el archivo " + nNoteFileName.toString() + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    .setMessage("Está a punto de eliminar el archivo " + nLoadedNote.getnTitle() + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Utilities.deleteNote(getApplicationContext(),nLoadedNote.getnDateTime()+Utilities.FILE_PRIVATE);

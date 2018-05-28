@@ -165,7 +165,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:paddingTop="5dp"
-                    android:text="Foro"
+                    android:text="Chat"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp" />
 

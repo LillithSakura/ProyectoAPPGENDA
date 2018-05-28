@@ -1,20 +1,37 @@
 package mx.edu.itlp.proyectoappgenda;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
 
     private EditText nTitle;
     private  EditText nContent;
     private String nNoteFileName;
+    private String nNoteFileExtension;
     private Note nLoadedNote;
+
+    private String tipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +41,66 @@ public class NoteActivity extends AppCompatActivity {
         nTitle = findViewById(R.id.note_et_title);
         nContent = findViewById(R.id.note_et_content);
 
+        nNoteFileExtension = getIntent().getStringExtra("NOTE_EXTENSION");
+        if (nNoteFileExtension == null || nNoteFileExtension.isEmpty()){
+            nNoteFileExtension = "[Examen]";
+        }
         nNoteFileName = getIntent().getStringExtra("NOTE_FILE");
         if (nNoteFileName != null && !nNoteFileName.isEmpty()){
             nLoadedNote=Utilities.getNoteByName(getApplicationContext(),nNoteFileName);
             if (nLoadedNote != null){
-                nTitle.setText(nLoadedNote.getnTitle());
+                nTitle.setText(borrarTipo(nLoadedNote.getnTitle()));
                 nContent.setText(nLoadedNote.getnContent());
+                setTitle("Editando Apunte");
             }
 
         }
+
+        // Get reference of widgets from XML layout
+        final Spinner spinner = findViewById(R.id.spinner);
+
+        // Initializing a String Array
+        String[] tipos = new String[]{
+                "[Examen]",
+                "[Exposición]",
+                "[Reunión]",
+                "[Otro]",
+                "[Apunte]"
+        };
+
+        final List<String> plantsList = new ArrayList<>(Arrays.asList(tipos));
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, plantsList);
+
+        spinner.setAdapter(adapter);
+        for (int i=0; i < tipos.length; i++)
+        {
+            if (nNoteFileExtension.equals(tipos[i]))
+            {
+                spinner.setSelection(i);
+            }
+
+        }
+
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               final String selectedItemText = (String) parent.getItemAtPosition(position);
+
+                // Notify the selected item text
+                //Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                tipo = selectedItemText;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
@@ -62,11 +130,11 @@ public class NoteActivity extends AppCompatActivity {
         }else{
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle("Borrar Nota")
-                    .setMessage("Está a punto de eliminar el archivo " + nNoteFileName.toString() + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    .setMessage("Está a punto de eliminar el archivo " + nTitle.getText() +Utilities.FILE_EXTENSIONS + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Utilities.deleteNote(getApplicationContext(),nLoadedNote.getnDateTime()+Utilities.FILE_EXTENSIONS);
-                            Toast.makeText(getApplicationContext(),"La nota " +nTitle.getText()+" se eliminó", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"El apunte " +nTitle.getText()+" se eliminó", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     }).setNegativeButton("No",null)
@@ -84,9 +152,9 @@ public class NoteActivity extends AppCompatActivity {
 
 
             if (nLoadedNote == null) {
-                note = new Note(System.currentTimeMillis(), nTitle.getText().toString(), nContent.getText().toString());
+                note = new Note(System.currentTimeMillis(), tipo +" "+ borrarTipo(nTitle.getText().toString()), nContent.getText().toString());
             } else {
-                note = new Note(nLoadedNote.getnDateTime(), nTitle.getText().toString(), nContent.getText().toString());
+                note = new Note(nLoadedNote.getnDateTime(), tipo +" "+ borrarTipo(nTitle.getText().toString()), nContent.getText().toString());
             }
 
 
@@ -98,5 +166,30 @@ public class NoteActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    private String borrarTipo( String titulo){
+
+        String[] tipos = new String[]{
+                "[Examen]",
+                "[Exposición]",
+                "[Reunión]",
+                "[Otro]",
+                "[Apunte]"
+        };
+
+        for (int i=0; i < tipos.length; i++)
+        {
+            titulo = titulo.replace(tipos[i],"");
+
+        }
+
+        if (titulo.equals("") || titulo.isEmpty())
+        {
+            titulo = "Apunte sin título";
+        }
+
+        return titulo.trim();
+
     }
 }

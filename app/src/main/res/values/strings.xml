@@ -10,10 +10,11 @@
     <string name="title_home">Inicio</string>
     <string name="title_dashboard">Notas</string>
     <string name="title_notifications">Foro</string>
-    <string name="NoteActivityNAME">Nueva Nota</string>
+    <string name="NoteActivityNAME">Nuevo Apunte</string>
+    <string name="NoteActivityNAME2">Editar Apunte</string>
     <string name="LoginActivityNAME">Ingresar a chat grupal</string>
-    <string name="ListaNotasActivityNAME">Notas y Recordatorios</string>
+    <string name="ListaNotasActivityNAME">Apuntes y Recordatorios</string>
     <string name="HomeActivityNAME">APPGENDA+</string>
-    <string name="NotasPrivadasActivityNAME">Notas privadas</string>
-    <string name="PrivNoteActivityNAME">Nueva nota privada</string>
+    <string name="NotasPrivadasActivityNAME">Apuntes privados</string>
+    <string name="PrivNoteActivityNAME">Nuevo apunte privado</string>
 </resources>

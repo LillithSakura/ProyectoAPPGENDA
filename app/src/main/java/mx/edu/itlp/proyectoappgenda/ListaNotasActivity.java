@@ -2,6 +2,8 @@ package mx.edu.itlp.proyectoappgenda;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -18,7 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ListaNotasActivity extends AppCompatActivity {
+public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefreshLayout.OnRefreshListener{
 
     RadioGroup radioGroup1;
     RadioButton deals;
@@ -27,14 +30,18 @@ public class ListaNotasActivity extends AppCompatActivity {
     private String nNoteFileName;
     private Note nLoadedNote;
 
+    private SwipeRefreshLayout swipeContainer;
+    private ListView lv2Refresh;
+    private ArrayAdapter<String> lvAdapter;
+
     private ListView nListViewNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
-
+        swipeContainer =  findViewById(R.id.srlContainer);
+        swipeContainer.setOnRefreshListener(this);
         nListViewNotes = findViewById(R.id.main_listview_notes);
-
         radioGroup1=(RadioGroup)findViewById(R.id.radioGroup1);
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -73,6 +80,66 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Update data in ListView
+                onResume();
+                Toast.makeText(getApplicationContext(), "Lista Actualizada" , Toast.LENGTH_SHORT).show();
+                // Remove widget from screen.
+                swipeContainer.setRefreshing(false);
+            }
+        }, 1000);
+    }
+
+    private String borrarTipo( String titulo){
+
+        String[] tipos = new String[]{
+                "[Examen]",
+                "[Exposición]",
+                "[Reunión]",
+                "[Otro]",
+                "[Apunte]"
+        };
+
+        for (int i=0; i < tipos.length; i++)
+        {
+            titulo = titulo.replace(tipos[i],"");
+
+        }
+
+
+        return titulo.trim();
+
+    }
+
+    private String buscarTipo( String titulo){
+
+        String palabra = "";
+        String[] tipos = new String[]{
+                "[Examen]",
+                "[Exposición]",
+                "[Reunión]",
+                "[Otro]",
+                "[Apunte]"
+        };
+
+        for (int i=0; i < tipos.length; i++)
+        {
+            int resultado = titulo.indexOf(tipos[i]);
+
+            if(resultado != -1) {
+                palabra = tipos[i];
+            }
+
+        }
+
+        return palabra;
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -101,15 +168,14 @@ public class ListaNotasActivity extends AppCompatActivity {
         nListViewNotes.setAdapter(null);
         nListViewNotes.setLongClickable(true);
 
-        ArrayList<Note> notes = Utilities.loadNote(this, "Nota");
+        final ArrayList<Note> notes = Utilities.loadNote(this, "Nota");
+
         if (notes == null || notes.size()==0){
             Toast.makeText(this,"No tienes notas creadas",Toast.LENGTH_SHORT).show();
             return;
         }else {
             NoteAdapter na = new NoteAdapter(this, R.layout.item_note,notes);
             nListViewNotes.setAdapter(na);
-
-
 
             nListViewNotes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
@@ -125,29 +191,32 @@ public class ListaNotasActivity extends AppCompatActivity {
 
                            final String fileName = ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
                                     + Utilities.FILE_EXTENSIONS;
-
+                            nNoteFileName = fileName;
+                            nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
                             if( items[item].equals("Eliminar")){
 
                                 AlertDialog.Builder mensaje = new AlertDialog.Builder(ListaNotasActivity.this).setTitle("Borrar Nota")
-                                        .setMessage("Está a punto de eliminar el archivo " + fileName.toString() + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                        .setMessage("Está a punto de eliminar el archivo " + borrarTipo(nLoadedNote.getnTitle()) + Utilities.FILE_EXTENSIONS + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                                nNoteFileName = fileName;
+
                                                 if (nNoteFileName != null && !nNoteFileName.isEmpty()){
-                                                    nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+
                                                     if (nLoadedNote != null){
                                                         Utilities.deleteNote(getApplicationContext(),fileName);
-                                                        Toast.makeText(getApplicationContext(),"La nota "+ nLoadedNote.getnTitle() +"se eliminó", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(),"El apunte "+ borrarTipo(nLoadedNote.getnTitle()) +" se eliminó", Toast.LENGTH_SHORT).show();
                                                     }
-
                                                 }
                                                 else{
                                                     Utilities.deleteNote(getApplicationContext(),fileName);
-                                                    Toast.makeText(getApplicationContext(),"La nota se eliminó", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getApplicationContext(),"El Apunte se eliminó", Toast.LENGTH_SHORT).show();
+
                                                 }
 
-                                                recreate();
+                                                onResume();
+                                                //recreate();
+
                                             }
                                         }).setNegativeButton("No",null)
                                         .setCancelable(false);
@@ -159,6 +228,10 @@ public class ListaNotasActivity extends AppCompatActivity {
                             if( items[item].equals("Editar")){
                                 Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
                                 viewNoteIntent.putExtra("NOTE_FILE", fileName);
+                                nNoteFileName = fileName;
+                                nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+                                viewNoteIntent.putExtra("NOTE_EXTENSION", buscarTipo(nLoadedNote.getnTitle()));
+
                                 startActivity(viewNoteIntent);
                             }
                             if( items[item].equals("Cancelar")){
@@ -172,12 +245,8 @@ public class ListaNotasActivity extends AppCompatActivity {
 
                     return true;
 
-
-
-
                 }
             });
-
             nListViewNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -186,9 +255,13 @@ public class ListaNotasActivity extends AppCompatActivity {
                             + Utilities.FILE_EXTENSIONS;
                     Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
                     viewNoteIntent.putExtra("NOTE_FILE", fileName);
+                    nNoteFileName = fileName;
+                    nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+                    viewNoteIntent.putExtra("NOTE_EXTENSION", buscarTipo(nLoadedNote.getnTitle()));
                     startActivity(viewNoteIntent);
                 }
             });
+
         }
     }
 }

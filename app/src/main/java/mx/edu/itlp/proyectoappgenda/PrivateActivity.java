@@ -24,6 +24,8 @@ public class PrivateActivity extends AppCompatActivity {
 
     RadioGroup radioGroup1;
     RadioButton deals;
+    private String nNoteFileName;
+    private Note nLoadedNote;
     private ListView nListViewNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,11 +115,12 @@ public class PrivateActivity extends AppCompatActivity {
 
                             final String fileName = ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
                                     + Utilities.FILE_PRIVATE;
-
+                            nNoteFileName = fileName;
+                            nLoadedNote = Utilities.getNoteByName(PrivateActivity.this,nNoteFileName);
                             if( items[item].equals("Eliminar")){
 
                                 AlertDialog.Builder mensaje = new AlertDialog.Builder(PrivateActivity.this).setTitle("Borrar Nota")
-                                        .setMessage("Está a punto de eliminar el archivo " + fileName.toString() + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                        .setMessage("Está a punto de eliminar el archivo " + nLoadedNote.getnTitle()  + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -133,7 +136,7 @@ public class PrivateActivity extends AppCompatActivity {
 
                             }
                             if( items[item].equals("Editar")){
-                                Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
+                                Intent viewNoteIntent = new Intent(getApplicationContext(), PrivNoteActivity.class);
                                 viewNoteIntent.putExtra("NOTE_FILE", fileName);
                                 startActivity(viewNoteIntent);
                             }
@@ -158,9 +161,9 @@ public class PrivateActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //run the NoteActivity in view/edit mode
-                    String fileName = ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
+                    final String fileName = ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
                             + Utilities.FILE_PRIVATE;
-                    Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
+                    Intent viewNoteIntent = new Intent(getApplicationContext(), PrivNoteActivity.class);
                     viewNoteIntent.putExtra("NOTE_FILE", fileName);
                     startActivity(viewNoteIntent);
                 }
