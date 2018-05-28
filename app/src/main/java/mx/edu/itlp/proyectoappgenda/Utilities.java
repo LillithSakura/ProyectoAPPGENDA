@@ -19,14 +19,14 @@ public class Utilities {
     public static final String FILE_EXTENSIONS = ".txt";
     public static final String FILE_PRIVATE = ".priv";
 
-    public static boolean saveNote(Context context, Note note){
-        String fileName = String.valueOf(note.getnDateTime()) + FILE_EXTENSIONS;
+    public static boolean saveNote(Context context, Note note, String tipo){
+        String fileName = tipo + String.valueOf(note.getnDateTime()) + FILE_EXTENSIONS;
 
         //Escribir algo en memoria interna
         FileOutputStream fos;
         ObjectOutputStream oos;
         try{
-            fos = context.openFileOutput(fileName,context.MODE_WORLD_READABLE);
+            fos = context.openFileOutput(fileName,context.MODE_PRIVATE);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(note);
             oos.close(); //Siempre cerrarlos
@@ -70,9 +70,17 @@ public class Utilities {
         System.out.println(context.getFilesDir());
 
         for (String file : filesDir.list()){
-            if (file.endsWith(FILE_EXTENSIONS)){
-                noteFiles.add(file);
+            if (tipo.equals("[Todos]")){
+                if (file.endsWith(FILE_EXTENSIONS)){
+                    noteFiles.add(file);
+                }
             }
+            else{
+                if (file.endsWith(FILE_EXTENSIONS) && file.startsWith(tipo)){ //PUEDE DAR PEDOS
+                    noteFiles.add(file);
+                }
+            }
+
         }
 
         FileInputStream fis;

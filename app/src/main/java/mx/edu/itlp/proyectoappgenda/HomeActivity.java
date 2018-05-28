@@ -19,6 +19,8 @@ public class HomeActivity extends AppCompatActivity {
 
     RadioGroup radioGroup1;
     RadioButton deals;
+    private String nNoteFileName;
+    private Note nLoadedNote;
     private ListView nListViewNotes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,31 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private String buscarTipo( String titulo){
+
+        String palabra = "";
+        String[] tipos = new String[]{
+                "[Examen]",
+                "[Exposición]",
+                "[Reunión]",
+                "[Otro]",
+                "[Apunte]"
+        };
+
+        for (int i=0; i < tipos.length; i++)
+        {
+            int resultado = titulo.indexOf(tipos[i]);
+
+            if(resultado != -1) {
+                palabra = tipos[i];
+            }
+
+        }
+
+        return palabra;
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
@@ -88,7 +115,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         nListViewNotes.setAdapter(null);
 
-        ArrayList<Note> notes = Utilities.loadNote(this, "Nota");
+        ArrayList<Note> notes = Utilities.loadNote(this, "[Todos]");
         if (notes == null || notes.size()==0){
             Toast.makeText(this,"No tienes notas creadas",Toast.LENGTH_SHORT).show();
             return;
@@ -104,6 +131,9 @@ public class HomeActivity extends AppCompatActivity {
                             + Utilities.FILE_EXTENSIONS;
                     Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
                     viewNoteIntent.putExtra("NOTE_FILE", fileName);
+                    nNoteFileName = fileName;
+                    nLoadedNote = Utilities.getNoteByName(HomeActivity.this,buscarTipo(((Note) nListViewNotes.getItemAtPosition(position)).getnTitle())+nNoteFileName);
+                    viewNoteIntent.putExtra("NOTE_EXTENSION", buscarTipo(nLoadedNote.getnTitle()));
                     startActivity(viewNoteIntent);
                 }
             });

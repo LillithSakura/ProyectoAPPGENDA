@@ -47,7 +47,7 @@ public class NoteActivity extends AppCompatActivity {
         }
         nNoteFileName = getIntent().getStringExtra("NOTE_FILE");
         if (nNoteFileName != null && !nNoteFileName.isEmpty()){
-            nLoadedNote=Utilities.getNoteByName(getApplicationContext(),nNoteFileName);
+            nLoadedNote=Utilities.getNoteByName(getApplicationContext(),nNoteFileExtension+nNoteFileName);
             if (nLoadedNote != null){
                 nTitle.setText(borrarTipo(nLoadedNote.getnTitle()));
                 nContent.setText(nLoadedNote.getnContent());
@@ -158,7 +158,7 @@ public class NoteActivity extends AppCompatActivity {
             }
 
 
-            if (Utilities.saveNote(this, note)) {
+            if (Utilities.saveNote(this, note, tipo)) {
                 Toast.makeText(this, "Se ha guardado la nota", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

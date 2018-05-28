@@ -17,9 +17,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -29,7 +32,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
     private  EditText nContent;
     private String nNoteFileName;
     private Note nLoadedNote;
-
+    private String tipo = "[Todos]";
     private SwipeRefreshLayout swipeContainer;
     private ListView lv2Refresh;
     private ArrayAdapter<String> lvAdapter;
@@ -42,6 +45,49 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
         swipeContainer =  findViewById(R.id.srlContainer);
         swipeContainer.setOnRefreshListener(this);
         nListViewNotes = findViewById(R.id.main_listview_notes);
+
+        // Get reference of widgets from XML layout
+        final Spinner spinner = findViewById(R.id.spinner2);
+
+        // Initializing a String Array
+        String[] tipos = new String[]{
+                "[Todos]",
+                "[Examen]",
+                "[Exposición]",
+                "[Reunión]",
+                "[Otro]",
+                "[Apunte]"
+
+        };
+
+        final List<String> plantsList = new ArrayList<>(Arrays.asList(tipos));
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(ListaNotasActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, plantsList);
+
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final String selectedItemText = (String) parent.getItemAtPosition(position);
+
+                // Notify the selected item text
+                //Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
+                tipo = selectedItemText;
+                onResume();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         radioGroup1=(RadioGroup)findViewById(R.id.radioGroup1);
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -75,6 +121,11 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                     default:
                         break;
                 }
+
+
+
+
+
             }
         });
     }
@@ -168,7 +219,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
         nListViewNotes.setAdapter(null);
         nListViewNotes.setLongClickable(true);
 
-        final ArrayList<Note> notes = Utilities.loadNote(this, "Nota");
+        final ArrayList<Note> notes = Utilities.loadNote(this, tipo);
 
         if (notes == null || notes.size()==0){
             Toast.makeText(this,"No tienes notas creadas",Toast.LENGTH_SHORT).show();
@@ -256,7 +307,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                     Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
                     viewNoteIntent.putExtra("NOTE_FILE", fileName);
                     nNoteFileName = fileName;
-                    nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+                    nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,buscarTipo(((Note) nListViewNotes.getItemAtPosition(position)).getnTitle())+nNoteFileName);
                     viewNoteIntent.putExtra("NOTE_EXTENSION", buscarTipo(nLoadedNote.getnTitle()));
                     startActivity(viewNoteIntent);
                 }
