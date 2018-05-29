@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mx.edu.itlp.proyectoappgenda">
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,11 @@
         <activity
             android:name=".PrivateActivity"
             android:label="@string/NotasPrivadasActivityNAME" />
-        <activity android:name=".PrivNoteActivity" android:label="@string/PrivNoteActivityNAME" ></activity>
+        <activity android:name=".PrivNoteActivity"
+            android:label="@string/PrivNoteActivityNAME" ></activity>
+
+        <activity android:name=".FingerActivity" />
+        <activity android:name=".PatronPrincipalActvity"></activity>
     </application>
 
 </manifest>

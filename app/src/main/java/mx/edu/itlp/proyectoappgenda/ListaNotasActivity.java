@@ -206,7 +206,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                 break;
             case R.id.action_private_save:
                 //empezar PrivateActivity en NewNote mode
-                Intent newPrivateActivity = new Intent(this,PrivateActivity.class); //PONER AQUÍ LA VALIDACIÓN DE ENTRADA
+                Intent newPrivateActivity = new Intent(this,FingerActivity.class); //PONER AQUÍ LA VALIDACIÓN DE ENTRADA
                 startActivity(newPrivateActivity);
                 break;
         }
@@ -240,14 +240,16 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                     builder.setItems(items, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
 
-                           final String fileName = ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
+                           final String fileName = buscarTipo(((Note) nListViewNotes.getItemAtPosition(position)).getnTitle()) + ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
                                     + Utilities.FILE_EXTENSIONS;
                             nNoteFileName = fileName;
+
                             nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+
                             if( items[item].equals("Eliminar")){
 
                                 AlertDialog.Builder mensaje = new AlertDialog.Builder(ListaNotasActivity.this).setTitle("Borrar Nota")
-                                        .setMessage("Está a punto de eliminar el archivo " + borrarTipo(nLoadedNote.getnTitle()) + Utilities.FILE_EXTENSIONS + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                        .setMessage("Está a punto de eliminar el archivo " + borrarTipo(((Note) nListViewNotes.getItemAtPosition(position)).getnTitle()) + Utilities.FILE_EXTENSIONS + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -277,12 +279,13 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
 
                             }
                             if( items[item].equals("Editar")){
+                                String fileName2 = ((Note) nListViewNotes.getItemAtPosition(position)).getnDateTime()
+                                        + Utilities.FILE_EXTENSIONS;
                                 Intent viewNoteIntent = new Intent(getApplicationContext(), NoteActivity.class);
-                                viewNoteIntent.putExtra("NOTE_FILE", fileName);
-                                nNoteFileName = fileName;
-                                nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,nNoteFileName);
+                                viewNoteIntent.putExtra("NOTE_FILE", fileName2);
+                                nNoteFileName = fileName2;
+                                nLoadedNote = Utilities.getNoteByName(ListaNotasActivity.this,buscarTipo(((Note) nListViewNotes.getItemAtPosition(position)).getnTitle())+nNoteFileName);
                                 viewNoteIntent.putExtra("NOTE_EXTENSION", buscarTipo(nLoadedNote.getnTitle()));
-
                                 startActivity(viewNoteIntent);
                             }
                             if( items[item].equals("Cancelar")){

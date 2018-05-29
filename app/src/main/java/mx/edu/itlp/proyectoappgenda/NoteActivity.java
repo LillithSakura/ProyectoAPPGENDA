@@ -133,7 +133,7 @@ public class NoteActivity extends AppCompatActivity {
                     .setMessage("Está a punto de eliminar el archivo " + nTitle.getText() +Utilities.FILE_EXTENSIONS + ", ¿desea continuar?").setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Utilities.deleteNote(getApplicationContext(),nLoadedNote.getnDateTime()+Utilities.FILE_EXTENSIONS);
+                            Utilities.deleteNote(getApplicationContext(),nNoteFileExtension+nLoadedNote.getnDateTime()+Utilities.FILE_EXTENSIONS);
                             Toast.makeText(getApplicationContext(),"El apunte " +nTitle.getText()+" se eliminó", Toast.LENGTH_SHORT).show();
                             finish();
                         }
