@@ -15,11 +15,15 @@ public class Note implements Serializable {
     private long nDateTime;
     private String nTitle;
     private String nContent;
+    private String Fecha;
+    private String Hora;
 
-    public Note(long nDateTime, String nTitle, String nContent) {
+    public Note(long nDateTime, String nTitle, String nContent, String Fecha, String Hora) {
         this.nDateTime = nDateTime;
         this.nTitle = nTitle;
         this.nContent = nContent;
+        this.Fecha = Fecha;
+        this.Hora = Hora;
     }
 
     public void setnDateTime(long nDateTime) {
@@ -34,6 +38,14 @@ public class Note implements Serializable {
         this.nContent = nContent;
     }
 
+    public void setnFecha(String Fecha) {
+        this.Fecha = Fecha;
+    }
+
+    public void setnHora(String Hora) {
+        this.Fecha = Hora;
+    }
+
     public long getnDateTime() {
         return nDateTime;
     }
@@ -44,6 +56,14 @@ public class Note implements Serializable {
 
     public String getnContent() {
         return nContent;
+    }
+
+    public String getnFecha() {
+        return Fecha;
+    }
+
+    public String getnHora() {
+        return Hora;
     }
 
     public String getDateTimeFormated(Context context ){

@@ -98,7 +98,7 @@ public class PrivateActivity extends AppCompatActivity {
             Toast.makeText(this,"No tienes notas creadas",Toast.LENGTH_SHORT).show();
             return;
         }else {
-            NoteAdapter na = new NoteAdapter(this, R.layout.item_note,notes);
+            NotePrivAdapter na = new NotePrivAdapter(this, R.layout.item_note,notes);
             nListViewNotes.setAdapter(na);
 
             nListViewNotes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -170,5 +170,8 @@ public class PrivateActivity extends AppCompatActivity {
             });
         }
     }
+
+    @Override
+    public void onBackPressed() { }
 }
 

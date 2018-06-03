@@ -221,6 +221,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
 
         final ArrayList<Note> notes = Utilities.loadNote(this, tipo);
 
+
         if (notes == null || notes.size()==0){
             Toast.makeText(this,"No tienes notas creadas",Toast.LENGTH_SHORT).show();
             return;
@@ -318,4 +319,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
 
         }
     }
+
+    @Override
+    public void onBackPressed() { }
 }

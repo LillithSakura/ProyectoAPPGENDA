@@ -15,9 +15,9 @@ import java.util.ArrayList;
  * Created by MR_TODOGAMES on 15/05/2018.
  */
 
-public class NoteAdapter extends ArrayAdapter<Note>{
+public class NotePrivAdapter extends ArrayAdapter<Note>{
 
-    public NoteAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Note> notes) {
+    public NotePrivAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Note> notes) {
         super(context, resource, notes);
     }
 
@@ -37,7 +37,7 @@ public class NoteAdapter extends ArrayAdapter<Note>{
             TextView date = convertView.findViewById(R.id.list_note_date);
             TextView content = convertView.findViewById(R.id.list_note_content);
             title.setText(note.getnTitle());
-            date.setText(note.getnFecha() + " " + note.getnHora()); //FECHA Y HORA GUARDADA
+            date.setText("Creada: "+note.getDateTimeFormated(getContext()));
             if (note.getnContent().length() > 30){ //MUESTRA MENOS DE 10 CARACTERES
                 content.setText(note.getnContent().substring(0,30) + "...");
             } else{

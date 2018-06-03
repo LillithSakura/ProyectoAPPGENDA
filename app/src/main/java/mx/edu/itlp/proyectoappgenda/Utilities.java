@@ -75,6 +75,11 @@ public class Utilities {
                     noteFiles.add(file);
                 }
             }
+            else if (tipo.equals("[Home]")){
+                if (file.endsWith(FILE_EXTENSIONS) && !file.startsWith("[Apunte]")){
+                    noteFiles.add(file);
+                }
+            }
             else{
                 if (file.endsWith(FILE_EXTENSIONS) && file.startsWith(tipo)){ //PUEDE DAR PEDOS
                     noteFiles.add(file);

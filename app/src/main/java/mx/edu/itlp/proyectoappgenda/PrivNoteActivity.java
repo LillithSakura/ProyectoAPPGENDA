@@ -88,9 +88,9 @@ public class PrivNoteActivity extends AppCompatActivity {
 
 
             if (nLoadedNote == null) {
-                note = new Note(System.currentTimeMillis(), nTitle.getText().toString(), nContent.getText().toString());
+                note = new Note(System.currentTimeMillis(), nTitle.getText().toString(), nContent.getText().toString(), "fecha","hora");
             } else {
-                note = new Note(nLoadedNote.getnDateTime(), nTitle.getText().toString(), nContent.getText().toString());
+                note = new Note(nLoadedNote.getnDateTime(), nTitle.getText().toString(), nContent.getText().toString(), "fecha","hora");
             }
 
 

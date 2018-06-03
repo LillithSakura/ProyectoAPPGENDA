@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Visibility;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -41,8 +43,12 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
     public Button FechaButton,HoraButton;
     public EditText FechaText,HoraText;
     private int dia, mes, anio, hora, minutos;
+    public LinearLayout DivFecha, DivHora;
+
+    private String TempFecha = "", TempHora = "";
 
     private String tipo;
+    private String tipoINICIAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         HoraButton = findViewById(R.id.HoraButton);
         FechaText = findViewById(R.id.FechaText);
         HoraText = findViewById(R.id.HoraText);
+        DivFecha = findViewById(R.id.DivFecha);
+        DivHora = findViewById(R.id.DivHora);
 
         FechaButton.setOnClickListener(this);
         HoraButton.setOnClickListener(this);
@@ -70,6 +78,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
             if (nLoadedNote != null){
                 nTitle.setText(borrarTipo(nLoadedNote.getnTitle()));
                 nContent.setText(nLoadedNote.getnContent());
+                FechaText.setText(nLoadedNote.getnFecha());
+                HoraText.setText(nLoadedNote.getnHora());
                 setTitle("Editando Apunte");
             }
 
@@ -112,6 +122,28 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                 // Notify the selected item text
                 //Toast.makeText(getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT).show();
                 tipo = selectedItemText;
+                if (selectedItemText.equals("[Apunte]")){
+                    TempFecha = FechaText.getText().toString();
+                    TempHora = HoraText.getText().toString();
+                    DivFecha.setVisibility(View.GONE);
+                    DivHora.setVisibility(View.GONE);
+                    FechaText.setText("");
+                    HoraText.setText("");
+                }
+                else{
+                    if ( TempFecha.equals("") && TempHora.equals(""))
+                    {
+                        DivFecha.setVisibility(View.VISIBLE);
+                        DivHora.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        FechaText.setText(TempFecha);
+                        HoraText.setText(TempHora);
+                        DivFecha.setVisibility(View.VISIBLE);
+                        DivHora.setVisibility(View.VISIBLE);
+                    }
+
+                }
 
             }
 
@@ -171,9 +203,10 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
 
 
             if (nLoadedNote == null) {
-                note = new Note(System.currentTimeMillis(), tipo +" "+ borrarTipo(nTitle.getText().toString()), nContent.getText().toString());
+                note = new Note(System.currentTimeMillis(), tipo +" "+ borrarTipo(nTitle.getText().toString()), nContent.getText().toString(), FechaText.getText().toString(),HoraText.getText().toString());
             } else {
-                note = new Note(nLoadedNote.getnDateTime(), tipo +" "+ borrarTipo(nTitle.getText().toString()), nContent.getText().toString());
+                note = new Note(nLoadedNote.getnDateTime(), tipo +" "+ borrarTipo(nTitle.getText().toString()), nContent.getText().toString(), FechaText.getText().toString(),HoraText.getText().toString());
+                Utilities.deleteNote(getApplicationContext(),nNoteFileExtension+nLoadedNote.getnDateTime()+Utilities.FILE_EXTENSIONS);
             }
 
 
@@ -215,36 +248,43 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v == FechaButton)
-        {
-            final Calendar  calendario = Calendar.getInstance();
-            dia = calendario.get(Calendar.DAY_OF_MONTH);
-            mes= calendario.get(Calendar.MONTH);
-            anio = calendario.get(Calendar.YEAR);
+        try {
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    FechaText.setText(dayOfMonth+"/"+(month+1)+"/"+year);
 
-                }
-            }, anio,mes,dia);
-            datePickerDialog.show();
+            if (v == FechaButton) {
+                final Calendar calendario = Calendar.getInstance();
+                dia = calendario.get(Calendar.DAY_OF_MONTH);
+                mes = calendario.get(Calendar.MONTH);
+                anio = calendario.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        FechaText.setText(String.format("%02d/%02d/%04d",dayOfMonth ,(month + 1) , year));
+
+                    }
+                }, anio, mes, dia);
+                datePickerDialog.show();
+            }
+            if (v == HoraButton) {
+
+                final Calendar c = Calendar.getInstance();
+                hora = c.get(Calendar.HOUR_OF_DAY);
+                minutos = c.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        HoraText.setText(String.format("%02d:%02d",hourOfDay , minute));
+                    }
+                }, hora, minutos, false);
+                timePickerDialog.show();
+
+            }
         }
-        if (v == HoraButton){
-
-            final Calendar c = Calendar.getInstance();
-            hora = c.get(Calendar.HOUR_OF_DAY);
-            minutos=c.get(Calendar.MINUTE);
-
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    HoraText.setText(hourOfDay+":"+minute);
-                }
-            },hora, minutos, false);
-            timePickerDialog.show();
-
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }
