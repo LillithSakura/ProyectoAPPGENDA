@@ -55,7 +55,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                 "[Examen]",
                 "[Exposición]",
                 "[Reunión]",
-                "[Otro]",
+                "[Tarea]",
                 "[Apunte]"
 
         };
@@ -150,7 +150,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                 "[Examen]",
                 "[Exposición]",
                 "[Reunión]",
-                "[Otro]",
+                "[Tarea]",
                 "[Apunte]"
         };
 
@@ -172,7 +172,7 @@ public class ListaNotasActivity extends AppCompatActivity  implements SwipeRefre
                 "[Examen]",
                 "[Exposición]",
                 "[Reunión]",
-                "[Otro]",
+                "[Tarea]",
                 "[Apunte]"
         };
 

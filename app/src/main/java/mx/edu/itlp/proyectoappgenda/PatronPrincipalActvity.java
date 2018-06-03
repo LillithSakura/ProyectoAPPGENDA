@@ -45,12 +45,12 @@ public class PatronPrincipalActvity extends AppCompatActivity {
                 public void onComplete(List<PatternLockView.Dot> pattern) {
                     final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
                     if(final_pattern.equals(save_pattern)){
-                        Toast.makeText(PatronPrincipalActvity.this, "Password Correct!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronPrincipalActvity.this, "¡Patrón Correcto!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(PatronPrincipalActvity.this,PrivateActivity.class);
                         startActivity(intent);
 
 
-                    }else{ Toast.makeText(PatronPrincipalActvity.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();}
+                    }else{ Toast.makeText(PatronPrincipalActvity.this, "¡Patrón Incorrecto!", Toast.LENGTH_SHORT).show();}
 
 
                 }

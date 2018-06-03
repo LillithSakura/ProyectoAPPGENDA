@@ -36,21 +36,21 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                                       CharSequence errString) {
 
         Toast.makeText(context,
-                "Authentication error\n" + errString,
+                "Error en Autentíficación\n" + errString,
                 Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onAuthenticationFailed() {
         Toast.makeText(context,
-                "NO eres el dueño prro",
+                "Su huella no está registrada en el dispositivo",
                 Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onAuthenticationHelp(int helpMsgId,
                                      CharSequence helpString) {
-        Toast.makeText(context,"Authentication help\n" + helpString,Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"Ayuda con Autentificación\n" + helpString,Toast.LENGTH_LONG).show();
 
     }
 
@@ -60,7 +60,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         Intent newPrivateActivity = new Intent(context,PrivateActivity.class);
         context.startActivity(newPrivateActivity);
 
-        //Toast.makeText(context,"A la verga si eres el dueño!",Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"Bienvenido, acceso concedido",Toast.LENGTH_LONG).show();
     }
 
 

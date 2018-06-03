@@ -34,12 +34,15 @@
 
             <EditText
                 android:id="@+id/note_et_title"
-                android:layout_width="wrap_content"
+                android:layout_width="266dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:gravity="start"
+                android:hint="Escriba un título"
                 android:inputType="textPersonName"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textAlignment="viewStart" />
 
         </LinearLayout>
 
@@ -62,6 +65,65 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/FechaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fecha"
+                tools:text="Fecha" />
+
+            <EditText
+                android:id="@+id/FechaText"
+                android:layout_width="266dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:gravity="start"
+                android:hint="Seleccione una fecha"
+                android:inputType="textPersonName|date"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:textAlignment="viewStart" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/HoraButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hora"
+                tools:text="Hora" />
+
+            <EditText
+                android:id="@+id/HoraText"
+                android:layout_width="266dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:gravity="start"
+                android:hint="Seleccione una hora"
+                android:inputType="textPersonName|time"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:textAlignment="viewStart" />
+
         </LinearLayout>
 
         <EditText

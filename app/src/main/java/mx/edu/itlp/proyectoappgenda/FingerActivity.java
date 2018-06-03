@@ -81,12 +81,12 @@ public class FingerActivity extends AppCompatActivity {
                 public void onComplete(List<PatternLockView.Dot> pattern) {
                     final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
                     if(final_pattern.equals(save_pattern)){
-                        Toast.makeText(FingerActivity.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FingerActivity.this, "¡Patrón Correcto!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(FingerActivity.this,PrivateActivity.class);
                         startActivity(intent);
 
 
-                    }else{ Toast.makeText(FingerActivity.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();}
+                    }else{ Toast.makeText(FingerActivity.this, "¡Patrón Incorrecto!", Toast.LENGTH_SHORT).show();}
 
 
                 }
@@ -133,7 +133,7 @@ public class FingerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Paper.book().write(save_pattern_key, final_pattern);
-                    Toast.makeText(FingerActivity.this, "Save pattern okay!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FingerActivity.this, "Patrón Guardado", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(FingerActivity.this,PatronPrincipalActvity.class);
                     startActivity(intent);
                 }

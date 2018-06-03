@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.foro:
                         in = new Intent(getBaseContext(),LoginActivity.class);
                         startActivity(in);
-                        overridePendingTransition(R.anim.rigth_in, R.anim.rigth_out);
+                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
                         break;
 
                     default:
@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 "[Examen]",
                 "[Exposición]",
                 "[Reunión]",
-                "[Otro]",
+                "[Tarea]",
                 "[Apunte]"
         };
 

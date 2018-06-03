@@ -1,7 +1,11 @@
 package mx.edu.itlp.proyectoappgenda;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,11 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,13 +31,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NoteActivity extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText nTitle;
     private  EditText nContent;
     private String nNoteFileName;
     private String nNoteFileExtension;
     private Note nLoadedNote;
+    public Button FechaButton,HoraButton;
+    public EditText FechaText,HoraText;
+    private int dia, mes, anio, hora, minutos;
 
     private String tipo;
 
@@ -37,6 +48,14 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
+
+        FechaButton = findViewById(R.id.FechaButton);
+        HoraButton = findViewById(R.id.HoraButton);
+        FechaText = findViewById(R.id.FechaText);
+        HoraText = findViewById(R.id.HoraText);
+
+        FechaButton.setOnClickListener(this);
+        HoraButton.setOnClickListener(this);
 
         nTitle = findViewById(R.id.note_et_title);
         nContent = findViewById(R.id.note_et_content);
@@ -64,7 +83,7 @@ public class NoteActivity extends AppCompatActivity {
                 "[Examen]",
                 "[Exposición]",
                 "[Reunión]",
-                "[Otro]",
+                "[Tarea]",
                 "[Apunte]"
         };
 
@@ -174,7 +193,7 @@ public class NoteActivity extends AppCompatActivity {
                 "[Examen]",
                 "[Exposición]",
                 "[Reunión]",
-                "[Otro]",
+                "[Tarea]",
                 "[Apunte]"
         };
 
@@ -191,5 +210,41 @@ public class NoteActivity extends AppCompatActivity {
 
         return titulo.trim();
 
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if (v == FechaButton)
+        {
+            final Calendar  calendario = Calendar.getInstance();
+            dia = calendario.get(Calendar.DAY_OF_MONTH);
+            mes= calendario.get(Calendar.MONTH);
+            anio = calendario.get(Calendar.YEAR);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    FechaText.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+
+                }
+            }, anio,mes,dia);
+            datePickerDialog.show();
+        }
+        if (v == HoraButton){
+
+            final Calendar c = Calendar.getInstance();
+            hora = c.get(Calendar.HOUR_OF_DAY);
+            minutos=c.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                    HoraText.setText(hourOfDay+":"+minute);
+                }
+            },hora, minutos, false);
+            timePickerDialog.show();
+
+        }
     }
 }
